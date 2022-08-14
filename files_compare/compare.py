@@ -1,3 +1,4 @@
+from email import parser
 import os
 from os.path import isfile as is_file
 from os.path import join as p_join
@@ -5,14 +6,37 @@ import filecmp
 from difflib import Differ
 import re
 from pprint import pprint
+import argparse
+from turtle import right
 
+def init_argparse() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        usage="%(prog)s [OPTION] [FILE]...",
+        description='left and right directory files compare'
+        )
+    parser.add_argument('-l', '--left-dir', required=True, dest='left_dir', help='Left side directory')
+    parser.add_argument('-r', '--right-dir', required=True, dest='right_dir', help='Right side directory')
+    return parser
 
+parser = init_argparse()
+args = parser.parse_args()
+# safe check is needed
+left_dir = args.left_dir
+right_dir = args.right_dir
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 print(f"Working Directory: {script_dir}")
 
-left_dir = os.path.join(script_dir, 'left_files')
-right_dir = os.path.join(script_dir, 'right_files')
+left_dir = p_join(script_dir, left_dir)
+right_dir = p_join(script_dir, right_dir)
+
+if not os.path.isdir(left_dir): 
+    print(f"Directory does NOT exist: {left_dir}")
+    exit(1)
+if not os.path.isdir(right_dir): 
+    print(f"Directory does NOT exist: {right_dir}")
+    exit(1)
+
 print(f"Left side: {left_dir}")
 print(f"Right side: {right_dir}")
 
