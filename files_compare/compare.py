@@ -37,7 +37,7 @@ def recursive_common_files_content_compare(dcmp: filecmp.dircmp, l_dir: str, r_d
     common_files_content_compare(dcmp, l_dir, r_dir)
     for index, s_dcmp in enumerate(sub_dcmps):
         sub_dir_name = dcmp.common_dirs[index]
-        print(f"{indent_prefix}++++++ {index} - Directory: {sub_dir_name} ++++++")
+        print(f"++++++ {index} - Directory: {sub_dir_name} ++++++")
         recursive_common_files_content_compare(s_dcmp, p_join(l_dir, sub_dir_name), p_join(r_dir, sub_dir_name))
 
 def common_files_content_compare(dir_compare_result: filecmp.dircmp, l_dir: str, r_dir: str):
